@@ -48,6 +48,9 @@ def index():
 def generate_keys():
     """Generate ECC keypairs for Alice and Bob"""
     try:
+        # Clean up old keys before generating new ones
+        cleanup_old_keys()
+        
         # Generate Alice's keypair
         alice_keys = ecc_manager.generate_keypair('alice')
         
@@ -88,6 +91,17 @@ def generate_keys():
         
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)})
+
+def cleanup_old_keys():
+    """Clean up old key files before generating new ones"""
+    key_files = ['alice_private.pem', 'alice_public.pem', 'bob_private.pem', 'bob_public.pem']
+    
+    for key_file in key_files:
+        if os.path.exists(key_file):
+            try:
+                os.remove(key_file)
+            except Exception:
+                pass  # Ignore errors during cleanup
 
 @app.route('/key_exchange')
 def key_exchange():
