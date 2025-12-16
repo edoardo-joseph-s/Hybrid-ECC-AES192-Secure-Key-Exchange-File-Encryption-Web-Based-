@@ -1,0 +1,19 @@
+This is a test file for Hybrid ECC-AES192 encryption system.
+It contains multiple lines of text to demonstrate the encryption and decryption capabilities.
+The system should be able to encrypt this file and then decrypt it back to the original content.
+
+Testing features:
+1. ECC key generation
+2. ECDH key exchange
+3. HKDF key derivation
+4. AES-192 encryption
+5. AES-192 decryption
+6. Performance monitoring
+
+Line 1: Hello World!
+Line 2: Testing encryption...
+Line 3: Hybrid cryptography system
+Line 4: AES-192 with ECC
+Line 5: Secure file transfer
+
+End of test file.
