@@ -36,6 +36,17 @@ function updateFileInfo(input, type) {
   }
 }
 
+// Helper: format bytes to human-readable string
+function formatBytes(bytes, decimals = 2) {
+  if (!bytes && bytes !== 0) return '-';
+  if (bytes === 0) return '0 B';
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}
+
 // Override existing functions to work with new UI
 async function generateKeys() {
   const btn = document.getElementById('generateKeysBtn');
@@ -179,13 +190,15 @@ async function encryptFile() {
       resultsDiv.innerHTML = `
                 <div class="process-success">✓ File berhasil dienkripsi</div>
                 <div style="margin-top: 12px; font-size: 12px; color: var(--muted);">
-                    Original: ${result.original_filename}<br>
-                    Terenkripsi: ${result.encrypted_filename}<br>
-                    Algorithm: ${result.algorithm}<br>
-                    Size increase: ${result.size_increase_percent.toFixed(
-                      2
-                    )}%<br>
-                    Time: ${result.encryption_time.toFixed(4)}s
+                    Original: ${result.original_filename} (${formatBytes(
+        result.original_size
+      )})<br>
+                    Terenkripsi: ${result.encrypted_filename} (${formatBytes(
+        result.encrypted_size
+      )})<br>
+                    Algoritma: ${result.algorithm}<br>
+                    Pertambahan ukuran: ${formatBytes(result.size_increase)}<br>
+                    Waktu: ${result.encryption_time.toFixed(4)}s
                 </div>
                 <button class="process-button" style="margin-top: 12px; padding: 6px 12px; font-size: 12px;" 
                         onclick="window.open('/download_file/${
@@ -243,9 +256,13 @@ async function decryptFile() {
       resultsDiv.innerHTML = `
                 <div class="process-success">✓ File berhasil didekripsi</div>
                 <div style="margin-top: 12px; font-size: 12px; color: var(--muted);">
-                    Terenkripsi: ${result.original_encrypted_filename}<br>
-                    Didekripsi: ${result.decrypted_filename}<br>
-                    Time: ${result.decryption_time.toFixed(4)}s
+                    Terenkripsi: ${
+                      result.original_encrypted_filename
+                    } (${formatBytes(result.original_encrypted_size)})<br>
+                    Didekripsi: ${result.decrypted_filename} (${formatBytes(
+        result.decrypted_size
+      )})<br>
+                    Waktu: ${result.decryption_time.toFixed(4)}s
                 </div>
                 <button class="process-button" style="margin-top: 12px; padding: 6px 12px; font-size: 12px;" 
                         onclick="window.open('/download_file/${
