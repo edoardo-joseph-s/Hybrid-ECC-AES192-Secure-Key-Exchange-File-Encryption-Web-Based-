@@ -204,7 +204,7 @@ async function encryptFile() {
                         onclick="window.open('/download_file/${
                           result.encrypted_filename
                         }', '_blank')">
-                    Unduh File Terenkripsi
+                    Donload File Encrypt
                 </button>
             `;
 
@@ -268,7 +268,7 @@ async function decryptFile() {
                         onclick="window.open('/download_file/${
                           result.decrypted_filename
                         }', '_blank')">
-                    Unduh File Didekripsi
+                    Unduh File Decrypt
                 </button>
             `;
     } else {
