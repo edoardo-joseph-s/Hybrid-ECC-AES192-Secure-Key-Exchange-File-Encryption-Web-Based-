@@ -65,7 +65,7 @@ async function generateKeys() {
                 <div class="process-success">✓ Kunci Publik Alice dibuat</div>
                 <div class="process-success">✓ Kunci Publik Bob dibuat</div>
                 <div style="margin-top: 12px; font-size: 12px; color: var(--muted);">
-                    Generation time: ${result.total_generation_time.toFixed(4)}s
+                    Waktu: ${result.total_generation_time.toFixed(4)}s
                 </div>
             `;
 
@@ -116,7 +116,7 @@ async function performKeyExchange() {
                     Shared secrets cocok: ${
                       result.shared_secrets_match ? 'Ya' : 'Tidak'
                     }<br>
-                    Waktu total: ${(
+                    Waktu: ${(
                       result.total_alice_time + result.total_bob_time
                     ).toFixed(4)}s
                 </div>
@@ -197,7 +197,7 @@ async function encryptFile() {
         result.encrypted_size
       )})<br>
                     Algoritma: ${result.algorithm}<br>
-                    Pertambahan ukuran: ${formatBytes(result.size_increase)}<br>
+                    Ukuran File: ${formatBytes(result.size_increase)}<br>
                     Waktu: ${result.encryption_time.toFixed(4)}s
                 </div>
                 <button class="process-button" style="margin-top: 12px; padding: 6px 12px; font-size: 12px;" 
