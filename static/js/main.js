@@ -56,7 +56,7 @@ function displayPerformanceStats(stats) {
             <div class="card text-center">
                 <div class="card-body">
                     <h5 class="card-title text-info">${stats.encryption_count}</h5>
-                    <p class="card-text">Encryptions</p>
+                    <p class="card-text">Enkripsi</p>
                 </div>
             </div>
         </div>
@@ -64,7 +64,7 @@ function displayPerformanceStats(stats) {
             <div class="card text-center">
                 <div class="card-body">
                     <h5 class="card-title text-warning">${stats.decryption_count}</h5>
-                    <p class="card-text">Decryptions</p>
+                    <p class="card-text">Dekripsi</p>
                 </div>
             </div>
         </div>
@@ -84,9 +84,9 @@ function displayPerformanceLogs(logs) {
         } else if (log.operation.includes('Key Exchange')) {
             details = `Alice: ${log.alice_time.toFixed(6)}s, Bob: ${log.bob_time.toFixed(6)}s`;
         } else if (log.operation.includes('Encryption')) {
-            details = `Time: ${log.encryption_time.toFixed(6)}s, Size: ${log.original_size} bytes`;
+            details = `Waktu: ${log.encryption_time.toFixed(6)}s, Ukuran: ${log.original_size} bytes`; 
         } else if (log.operation.includes('Decryption')) {
-            details = `Time: ${log.decryption_time.toFixed(6)}s, Size: ${log.decrypted_size} bytes`;
+            details = `Waktu: ${log.decryption_time.toFixed(6)}s, Ukuran: ${log.decrypted_size} bytes`;
         }
         
         logsHtml += `

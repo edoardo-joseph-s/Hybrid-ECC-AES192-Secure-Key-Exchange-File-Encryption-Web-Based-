@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hybrid ECC-AES192: Secure Key Exchange & File Encryption</title>
+    <title>Hybrid ECC-AES192: Pertukaran Kunci Aman & Enkripsi File</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
@@ -13,24 +13,8 @@
     </div>
 
     <div class="container">
-        <!-- Navigation Tabs -->
-        <ul class="nav nav-pills mb-4" id="mainTabs" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="process-tab" data-bs-toggle="tab" data-bs-target="#process" type="button" role="tab">
-                    <i class="fas fa-cogs me-2"></i>Process
-                </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="analysis-tab" data-bs-toggle="tab" data-bs-target="#analysis" type="button" role="tab">
-                    <i class="fas fa-chart-line me-2"></i>Performance Analysis
-                </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="about-tab" data-bs-toggle="tab" data-bs-target="#about" type="button" role="tab">
-                    <i class="fas fa-info-circle me-2"></i>About
-                </button>
-            </li>
-        </ul>
+        <!-- Navigation Tabs removed -->
+
 
         <!-- Tab Content -->
         <div class="tab-content" id="mainTabContent">
@@ -40,7 +24,7 @@
                     <!-- HEADER -->
                     <header class="process-header">
                         <h1>Hybrid ECC–AES192</h1>
-                        <p>Secure Key Exchange & File Encryption</p>
+                        <p>Pertukaran Kunci Aman & Enkripsi File</p>
                     </header>
 
                     <!-- STEPPER -->
@@ -62,7 +46,7 @@
                     <!-- STEP 1: GENERATE KEYS -->
                     <div class="step-content active" id="step1">
                         <div class="process-card">
-                            <h2>Generate ECC Keypairs</h2>
+                            <h2>Hasilkan Pasangan Kunci ECC</h2>
 
                             <label class="process-label">Curve</label>
                             <select class="process-select">
@@ -70,7 +54,7 @@
                             </select>
 
                             <button class="process-button" onclick="generateKeys()" id="generateKeysBtn">
-                                Generate Keypair
+                                Buat Keypair
                             </button>
 
                             <div class="process-result" id="keyResults"></div>
@@ -80,12 +64,12 @@
                     <!-- STEP 2: KEY EXCHANGE -->
                     <div class="step-content" id="step2">
                         <div class="process-card">
-                            <h2>ECDH Key Exchange</h2>
+                            <h2>Pertukaran Kunci ECDH</h2>
 
-                            <label class="process-label">Public Keys</label>
+                            <label class="process-label">Kunci Publik</label>
                             <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 12px; margin-bottom: 20px; font-family: monospace; font-size: 12px;">
-                                <div><strong>Alice:</strong> <span id="alicePubKey">Not generated</span></div>
-                                <div><strong>Bob:</strong> <span id="bobPubKey">Not generated</span></div>
+                                <div><strong>Alice:</strong> <span id="alicePubKey">Belum dibuat</span></div>
+                                <div><strong>Bob:</strong> <span id="bobPubKey">Belum dibuat</span></div>
                             </div>
 
                             <button class="process-button" onclick="performKeyExchange()" id="keyExchangeBtn" disabled>
@@ -99,22 +83,22 @@
                     <!-- STEP 3: ENCRYPT FILE -->
                     <div class="step-content" id="step3">
                         <div class="process-card">
-                            <h2>Encrypt File</h2>
+                            <h2>Enkripsi File</h2>
 
-                            <label class="process-label">Choose File</label>
+                            <label class="process-label">Pilih File</label>
                             <div class="file-input-wrapper">
                                 <input type="file" id="encryptFile" class="process-select" onchange="updateFileInfo(this, 'encrypt')">
                                 <div class="file-info" id="encryptFileInfo"></div>
                             </div>
 
-                            <label class="process-label">Encryption Mode</label>
+                            <label class="process-label">Mode Enkripsi</label>
                             <select class="process-select" id="encryptMode">
-                                <option value="gcm">AES-192-GCM (Recommended)</option>
+                                <option value="gcm">AES-192-GCM (Direkomendasikan)</option>
                                 <option value="cbc">AES-192-CBC</option>
                             </select>
 
                             <button class="process-button" onclick="encryptFile()" id="encryptBtn" disabled>
-                                Encrypt File
+                                Enkripsi File
                             </button>
 
                             <div class="process-result" id="encryptResults"></div>
@@ -124,16 +108,16 @@
                     <!-- STEP 4: DECRYPT FILE -->
                     <div class="step-content" id="step4">
                         <div class="process-card">
-                            <h2>Decrypt File</h2>
+                            <h2>Dekripsi File</h2>
 
-                            <label class="process-label">Choose Encrypted File</label>
+                            <label class="process-label">Pilih File Terenkripsi</label>
                             <div class="file-input-wrapper">
                                 <input type="file" id="decryptFile" class="process-select" onchange="updateFileInfo(this, 'decrypt')">
                                 <div class="file-info" id="decryptFileInfo"></div>
                             </div>
 
                             <button class="process-button" onclick="decryptFile()" id="decryptBtn" disabled>
-                                Decrypt File
+                                Dekripsi File
                             </button>
 
                             <div class="process-result" id="decryptResults"></div>
@@ -142,9 +126,9 @@
 
                     <!-- DANGER ZONE -->
                     <div class="process-danger">
-                        <h3>Danger Zone</h3>
-                        <p>Reset system (clear keys & files)</p>
-                        <button onclick="resetSystem()">Reset</button>
+                        <h3>Zona Berbahaya</h3>
+                        <p>Reset sistem (hapus kunci & file)</p>
+                        <button onclick="resetSystem()">Reset Sistem</button>
                     </div>
                 </div>
             </div>
@@ -156,12 +140,12 @@
                         <div class="card">
                             <div class="card-header performance-stats">
                                 <h5 class="mb-0">
-                                    <i class="fas fa-chart-line me-2"></i>Performance Analysis
+                                    <i class="fas fa-chart-line me-2"></i>Analisis Kinerja
                                 </h5>
                             </div>
                             <div class="card-body">
                                 <button class="btn btn-primary mb-3" onclick="loadPerformance()">
-                                    <i class="fas fa-sync me-2"></i>Refresh Performance Data
+                                    <i class="fas fa-sync me-2"></i>Segarkan Data Kinerja
                                 </button>
                                 
                                 <div id="performanceContent">
@@ -170,15 +154,15 @@
                                     </div>
                                     
                                     <div class="mt-4">
-                                        <h6>Operation Logs</h6>
+                                        <h6>Log Operasi</h6>
                                         <div class="table-responsive">
                                             <table class="table table-striped" id="logsTable">
                                                 <thead>
                                                     <tr>
-                                                        <th>Operation</th>
-                                                        <th>Time (s)</th>
-                                                        <th>Details</th>
-                                                        <th>Timestamp</th>
+                                                        <th>Operasi</th>
+                                                        <th>Waktu (s)</th>
+                                                        <th>Detail</th>
+                                                        <th>Cap Waktu</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -201,40 +185,40 @@
                         <div class="card">
                             <div class="card-header bg-dark text-white">
                                 <h5 class="mb-0">
-                                    <i class="fas fa-info-circle me-2"></i>About Hybrid ECC-AES192 System
+                                    <i class="fas fa-info-circle me-2"></i>Tentang Sistem Hybrid ECC-AES192
                                 </h5>
                             </div>
                             <div class="card-body">
-                                <h6>System Overview</h6>
-                                <p>This web application demonstrates a hybrid cryptosystem combining Elliptic Curve Cryptography (ECC) with Advanced Encryption Standard (AES-192) for secure key exchange and file encryption.</p>
+                                <h6>Ikhtisar Sistem</h6>
+                                <p>Aplikasi web ini mendemonstrasikan sistem kriptografi hibrid yang menggabungkan Elliptic Curve Cryptography (ECC) dengan Advanced Encryption Standard (AES-192) untuk pertukaran kunci yang aman dan enkripsi file.</p>
                                 
-                                <h6>Key Components</h6>
+                                <h6>Komponen Utama</h6>
                                 <ul>
-                                    <li><strong>ECC (secp256r1):</strong> Generates keypairs for Alice and Bob</li>
-                                    <li><strong>ECDH:</strong> Elliptic Curve Diffie-Hellman for secure key exchange</li>
-                                    <li><strong>HKDF:</strong> HMAC-based Key Derivation Function to derive AES-192 keys</li>
-                                    <li><strong>AES-192:</strong> Symmetric encryption for file data (GCM/CBC modes)</li>
+                                    <li><strong>ECC (secp256r1):</strong> Menghasilkan pasangan kunci untuk Alice dan Bob</li>
+                                    <li><strong>ECDH:</strong> Elliptic Curve Diffie-Hellman untuk pertukaran kunci yang aman</li>
+                                    <li><strong>HKDF:</strong> Fungsi derivasi kunci berbasis HMAC untuk menghasilkan kunci AES-192</li>
+                                    <li><strong>AES-192:</strong> Enkripsi simetris untuk data file (mode GCM/CBC)</li>
                                 </ul>
                                 
-                                <h6>Security Features</h6>
+                                <h6>Fitur Keamanan</h6>
                                 <ul>
-                                    <li>Forward secrecy through ECDH</li>
-                                    <li>Authentication via GCM mode</li>
-                                    <li>Secure key derivation with HKDF</li>
-                                    <li>No private key transmission</li>
+                                    <li>Kerahasiaan maju melalui ECDH</li>
+                                    <li>Otentikasi melalui mode GCM</li>
+                                    <li>Derivasi kunci yang aman dengan HKDF</li>
+                                    <li>Tidak ada transmisi kunci privat</li>
                                 </ul>
                                 
-                                <h6>Technical Specifications</h6>
+                                <h6>Spesifikasi Teknis</h6>
                                 <ul>
-                                    <li>ECC Curve: secp256r1 (prime256v1)</li>
-                                    <li>Symmetric Algorithm: AES-192</li>
-                                    <li>Key Derivation: HKDF-SHA256</li>
-                                    <li>Max File Size: 16MB</li>
+                                    <li>Kurva ECC: secp256r1 (prime256v1)</li>
+                                    <li>Algoritma Simetris: AES-192</li>
+                                    <li>Derivasi Kunci: HKDF-SHA256</li>
+                                    <li>Ukuran File Maksimum: 16MB</li>
                                 </ul>
                                 
                                 <div class="alert alert-info mt-3">
                                     <i class="fas fa-info-circle me-2"></i>
-                                    <strong>Note:</strong> This is an educational demonstration for academic purposes. For production use, additional security measures should be implemented.
+                                    <strong>Catatan:</strong> Ini adalah demonstrasi edukasional untuk tujuan akademik. Untuk penggunaan produksi, langkah-langkah keamanan tambahan harus diterapkan.
                                 </div>
                             </div>
                         </div>

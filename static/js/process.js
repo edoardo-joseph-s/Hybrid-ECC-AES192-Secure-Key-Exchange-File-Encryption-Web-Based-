@@ -49,8 +49,8 @@ async function generateKeys() {
             
             const resultsDiv = document.getElementById('keyResults');
             resultsDiv.innerHTML = `
-                <div class="process-success">✓ Alice Public Key generated</div>
-                <div class="process-success">✓ Bob Public Key generated</div>
+                <div class="process-success">✓ Kunci Publik Alice dibuat</div>
+                <div class="process-success">✓ Kunci Publik Bob dibuat</div>
                 <div style="margin-top: 12px; font-size: 12px; color: var(--muted);">
                     Generation time: ${result.total_generation_time.toFixed(4)}s
                 </div>
@@ -78,7 +78,7 @@ async function generateKeys() {
         `;
     } finally {
         btn.disabled = false;
-        btn.textContent = 'Generate Keypair';
+        btn.textContent = 'Buat Keypair';
     }
 }
 
@@ -133,13 +133,13 @@ async function encryptFile() {
     const file = fileInput.files[0];
     
     if (!file) {
-        alert('Please select a file to encrypt');
+        alert('Silakan pilih file untuk dienkripsi');
         return;
     }
     
     const btn = document.getElementById('encryptBtn');
     btn.disabled = true;
-    btn.textContent = 'Encrypting...';
+    btn.textContent = 'Sedang mengenkripsi...';
     
     try {
         const formData = new FormData();
@@ -156,17 +156,17 @@ async function encryptFile() {
         if (result.success) {
             const resultsDiv = document.getElementById('encryptResults');
             resultsDiv.innerHTML = `
-                <div class="process-success">✓ File encrypted successfully</div>
+                <div class="process-success">✓ File berhasil dienkripsi</div>
                 <div style="margin-top: 12px; font-size: 12px; color: var(--muted);">
                     Original: ${result.original_filename}<br>
-                    Encrypted: ${result.encrypted_filename}<br>
+                    Terenkripsi: ${result.encrypted_filename}<br>
                     Algorithm: ${result.algorithm}<br>
                     Size increase: ${result.size_increase_percent.toFixed(2)}%<br>
                     Time: ${result.encryption_time.toFixed(4)}s
                 </div>
                 <button class="process-button" style="margin-top: 12px; padding: 6px 12px; font-size: 12px;" 
                         onclick="window.open('/download_file/${result.encrypted_filename}', '_blank')">
-                    Download Encrypted File
+                    Unduh File Terenkripsi
                 </button>
             `;
             
@@ -185,7 +185,7 @@ async function encryptFile() {
         `;
     } finally {
         btn.disabled = false;
-        btn.textContent = 'Encrypt File';
+        btn.textContent = 'Enkripsi File';
     }
 }
 
@@ -194,13 +194,13 @@ async function decryptFile() {
     const file = fileInput.files[0];
     
     if (!file) {
-        alert('Please select a file to decrypt');
+        alert('Silakan pilih file untuk didekripsi');
         return;
     }
     
     const btn = document.getElementById('decryptBtn');
     btn.disabled = true;
-    btn.textContent = 'Decrypting...';
+    btn.textContent = 'Sedang mendekripsi...';
     
     try {
         const formData = new FormData();
@@ -216,15 +216,15 @@ async function decryptFile() {
         if (result.success) {
             const resultsDiv = document.getElementById('decryptResults');
             resultsDiv.innerHTML = `
-                <div class="process-success">✓ File decrypted successfully</div>
+                <div class="process-success">✓ File berhasil didekripsi</div>
                 <div style="margin-top: 12px; font-size: 12px; color: var(--muted);">
-                    Encrypted: ${result.original_encrypted_filename}<br>
-                    Decrypted: ${result.decrypted_filename}<br>
+                    Terenkripsi: ${result.original_encrypted_filename}<br>
+                    Didekripsi: ${result.decrypted_filename}<br>
                     Time: ${result.decryption_time.toFixed(4)}s
                 </div>
                 <button class="process-button" style="margin-top: 12px; padding: 6px 12px; font-size: 12px;" 
                         onclick="window.open('/download_file/${result.decrypted_filename}', '_blank')">
-                    Download Decrypted File
+                    Unduh File Didekripsi
                 </button>
             `;
         } else {
@@ -238,7 +238,7 @@ async function decryptFile() {
         `;
     } finally {
         btn.disabled = false;
-        btn.textContent = 'Decrypt File';
+        btn.textContent = 'Dekripsi File';
     }
 }
 
@@ -265,8 +265,8 @@ async function resetSystem() {
             document.getElementById('decryptResults').innerHTML = '';
             
             // Reset key display
-            document.getElementById('alicePubKey').textContent = 'Not generated';
-            document.getElementById('bobPubKey').textContent = 'Not generated';
+            document.getElementById('alicePubKey').textContent = 'Belum dibuat';
+            document.getElementById('bobPubKey').textContent = 'Belum dibuat';
             
             // Disable buttons
             document.getElementById('keyExchangeBtn').disabled = true;
