@@ -6,88 +6,10 @@
     <title>Hybrid ECC-AES192: Secure Key Exchange & File Encryption</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        .gradient-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 2rem 0;
-            margin-bottom: 2rem;
-        }
-        .card {
-            border: none;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-        }
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-        }
-        .step-badge {
-            background: linear-gradient(45deg, #28a745, #20c997);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: bold;
-        }
-        .loading {
-            display: none;
-        }
-        .loading.show {
-            display: inline-block;
-        }
-        .key-display {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 0.375rem;
-            padding: 1rem;
-            font-family: 'Courier New', monospace;
-            font-size: 0.875rem;
-            max-height: 200px;
-            overflow-y: auto;
-            word-break: break-all;
-        }
-        .success-message {
-            background: linear-gradient(45deg, #d4edda, #c3e6cb);
-            border: 1px solid #c3e6cb;
-            color: #155724;
-        }
-        .error-message {
-            background: linear-gradient(45deg, #f8d7da, #f5c6cb);
-            border: 1px solid #f5c6cb;
-            color: #721c24;
-        }
-        .performance-stats {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            border-radius: 10px;
-            padding: 1.5rem;
-        }
-        .nav-pills .nav-link.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/process.css') }}">
 </head>
 <body>
-    <!-- Header -->
-    <div class="gradient-header">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-8">
-                    <h1 class="display-4 fw-bold">
-                        <i class="fas fa-shield-alt me-3"></i>
-                        Hybrid ECC-AES192
-                    </h1>
-                    <p class="lead mb-0">Secure Key Exchange & File Encryption System</p>
-                    <p class="mb-0">Elliptic Curve Cryptography + Advanced Encryption Standard</p>
-                </div>
-                <div class="col-md-4 text-end">
-                    <div class="badge bg-light text-dark p-3">
-                        <i class="fas fa-lock me-2"></i>
-                        <strong>Web-Based Cryptography Demo</strong>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <div class="container">
@@ -114,229 +36,115 @@
         <div class="tab-content" id="mainTabContent">
             <!-- Process Tab -->
             <div class="tab-pane fade show active" id="process" role="tabpanel">
-                <div class="row">
-                    <!-- Step 1: Generate Keys -->
-                    <div class="col-lg-6 mb-4">
-                        <div class="card h-100">
-                            <div class="card-header bg-primary text-white">
-                                <h5 class="mb-0">
-                                    <span class="step-badge">Step 1</span>
-                                    <i class="fas fa-key me-2"></i>Generate ECC Keypairs
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <p class="text-muted">Generate ECC keypairs for Alice and Bob using secp256r1 curve</p>
-                                <button class="btn btn-primary" onclick="generateKeys()">
-                                    <i class="fas fa-play me-2"></i>Generate Keys
-                                    <span class="loading spinner-border spinner-border-sm ms-2"></span>
-                                </button>
-                                
-                                <div id="keyResults" class="mt-3" style="display: none;">
-                                    <div class="alert alert-success">
-                                        <h6><i class="fas fa-check-circle me-2"></i>Keys Generated Successfully!</h6>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <strong>Alice Generation Time:</strong> <span id="aliceGenTime"></span>s<br>
-                                                <strong>Bob Generation Time:</strong> <span id="bobGenTime"></span>s<br>
-                                                <strong>Total Time:</strong> <span id="totalGenTime"></span>s
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h6>Alice Public Key:</h6>
-                                            <div class="key-display" id="alicePublicKey"></div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <h6>Bob Public Key:</h6>
-                                            <div class="key-display" id="bobPublicKey"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="process-container">
+                    <!-- HEADER -->
+                    <header class="process-header">
+                        <h1>Hybrid ECC–AES192</h1>
+                        <p>Secure Key Exchange & File Encryption</p>
+                    </header>
+
+                    <!-- STEPPER -->
+                    <div class="process-stepper">
+                        <div class="process-step active" data-step="1">
+                            <span>1</span> Generate
+                        </div>
+                        <div class="process-step" data-step="2">
+                            <span>2</span> Exchange
+                        </div>
+                        <div class="process-step" data-step="3">
+                            <span>3</span> Encrypt
+                        </div>
+                        <div class="process-step" data-step="4">
+                            <span>4</span> Decrypt
                         </div>
                     </div>
 
-                    <!-- Step 2: Key Exchange -->
-                    <div class="col-lg-6 mb-4">
-                        <div class="card h-100">
-                            <div class="card-header bg-success text-white">
-                                <h5 class="mb-0">
-                                    <span class="step-badge">Step 2</span>
-                                    <i class="fas fa-exchange-alt me-2"></i>ECDH Key Exchange
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <p class="text-muted">Perform ECDH key exchange and derive AES-192 key using HKDF</p>
-                                <button class="btn btn-success" onclick="performKeyExchange()" disabled id="keyExchangeBtn">
-                                    <i class="fas fa-exchange-alt me-2"></i>Exchange Keys
-                                    <span class="loading spinner-border spinner-border-sm ms-2"></span>
-                                </button>
-                                
-                                <div id="exchangeResults" class="mt-3" style="display: none;">
-                                    <div class="alert alert-success">
-                                        <h6><i class="fas fa-check-circle me-2"></i>Key Exchange Successful!</h6>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <strong>Keys Match:</strong> <span id="keysMatch"></span><br>
-                                                <strong>Shared Secrets Match:</strong> <span id="secretsMatch"></span><br>
-                                                <strong>AES-192 Key (Hex):</strong>
-                                            </div>
-                                        </div>
-                                        <div class="key-display mt-2" id="aesKey"></div>
-                                    </div>
-                                    
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h6>Alice Performance:</h6>
-                                            <small>
-                                                ECDH Time: <span id="aliceECDHTime"></span>s<br>
-                                                HKDF Time: <span id="aliceHKDFTime"></span>s<br>
-                                                Total Time: <span id="aliceTotalTime"></span>s
-                                            </small>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <h6>Bob Performance:</h6>
-                                            <small>
-                                                ECDH Time: <span id="bobECDHTime"></span>s<br>
-                                                HKDF Time: <span id="bobHKDFTime"></span>s<br>
-                                                Total Time: <span id="bobTotalTime"></span>s
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <!-- STEP 1: GENERATE KEYS -->
+                    <div class="step-content active" id="step1">
+                        <div class="process-card">
+                            <h2>Generate ECC Keypairs</h2>
+
+                            <label class="process-label">Curve</label>
+                            <select class="process-select">
+                                <option>secp256r1</option>
+                            </select>
+
+                            <button class="process-button" onclick="generateKeys()" id="generateKeysBtn">
+                                Generate Keypair
+                            </button>
+
+                            <div class="process-result" id="keyResults"></div>
                         </div>
                     </div>
 
-                    <!-- Step 3: Encrypt File -->
-                    <div class="col-lg-6 mb-4">
-                        <div class="card h-100">
-                            <div class="card-header bg-warning text-dark">
-                                <h5 class="mb-0">
-                                    <span class="step-badge">Step 3</span>
-                                    <i class="fas fa-lock me-2"></i>Encrypt File
-                                </h5>
+                    <!-- STEP 2: KEY EXCHANGE -->
+                    <div class="step-content" id="step2">
+                        <div class="process-card">
+                            <h2>ECDH Key Exchange</h2>
+
+                            <label class="process-label">Public Keys</label>
+                            <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 12px; margin-bottom: 20px; font-family: monospace; font-size: 12px;">
+                                <div><strong>Alice:</strong> <span id="alicePubKey">Not generated</span></div>
+                                <div><strong>Bob:</strong> <span id="bobPubKey">Not generated</span></div>
                             </div>
-                            <div class="card-body">
-                                <p class="text-muted">Upload a file to encrypt using AES-192</p>
-                                <form id="encryptForm" enctype="multipart/form-data">
-                                    <div class="mb-3">
-                                        <label for="encryptFile" class="form-label">Choose File</label>
-                                        <input type="file" class="form-control" id="encryptFile" name="file" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="encryptMode" class="form-label">Encryption Mode</label>
-                                        <select class="form-select" id="encryptMode" name="mode">
-                                            <option value="gcm">AES-192-GCM (Recommended)</option>
-                                            <option value="cbc">AES-192-CBC</option>
-                                        </select>
-                                    </div>
-                                    <button type="submit" class="btn btn-warning" disabled id="encryptBtn">
-                                        <i class="fas fa-lock me-2"></i>Encrypt File
-                                        <span class="loading spinner-border spinner-border-sm ms-2"></span>
-                                    </button>
-                                </form>
-                                
-                                <div id="encryptResults" class="mt-3" style="display: none;">
-                                    <div class="alert alert-warning">
-                                        <h6><i class="fas fa-check-circle me-2"></i>File Encrypted Successfully!</h6>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <strong>Original File:</strong> <span id="originalFilename"></span><br>
-                                                <strong>Encrypted File:</strong> <span id="encryptedFilename"></span><br>
-                                                <strong>Algorithm:</strong> <span id="encryptAlgorithm"></span>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <strong>Original Size:</strong> <span id="originalSize"></span> bytes<br>
-                                                <strong>Encrypted Size:</strong> <span id="encryptedSize"></span> bytes<br>
-                                                <strong>Size Increase:</strong> <span id="sizeIncrease"></span>%
-                                            </div>
-                                        </div>
-                                        <div class="mt-2">
-                                            <strong>Encryption Time:</strong> <span id="encryptionTime"></span>s
-                                        </div>
-                                        <div class="mt-2" id="encryptMetadata" style="display: none;">
-                                            <small class="text-muted">
-                                                <strong>Nonce/IV:</strong> <span id="encryptNonce"></span><br>
-                                                <strong>Tag:</strong> <span id="encryptTag"></span>
-                                            </small>
-                                        </div>
-                                        <button class="btn btn-sm btn-success mt-2" onclick="downloadFile($('#encryptedFilename').text())">
-                                            <i class="fas fa-download me-1"></i>Download Encrypted File
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+
+                            <button class="process-button" onclick="performKeyExchange()" id="keyExchangeBtn" disabled>
+                                Perform Key Exchange
+                            </button>
+
+                            <div class="process-result" id="exchangeResults"></div>
                         </div>
                     </div>
 
-                    <!-- Step 4: Decrypt File -->
-                    <div class="col-lg-6 mb-4">
-                        <div class="card h-100">
-                            <div class="card-header bg-info text-white">
-                                <h5 class="mb-0">
-                                    <span class="step-badge">Step 4</span>
-                                    <i class="fas fa-unlock me-2"></i>Decrypt File
-                                </h5>
+                    <!-- STEP 3: ENCRYPT FILE -->
+                    <div class="step-content" id="step3">
+                        <div class="process-card">
+                            <h2>Encrypt File</h2>
+
+                            <label class="process-label">Choose File</label>
+                            <div class="file-input-wrapper">
+                                <input type="file" id="encryptFile" class="process-select" onchange="updateFileInfo(this, 'encrypt')">
+                                <div class="file-info" id="encryptFileInfo"></div>
                             </div>
-                            <div class="card-body">
-                                <p class="text-muted">Upload encrypted file to decrypt</p>
-                                <form id="decryptForm" enctype="multipart/form-data">
-                                    <div class="mb-3">
-                                        <label for="decryptFile" class="form-label">Choose Encrypted File</label>
-                                        <input type="file" class="form-control" id="decryptFile" name="file" required>
-                                    </div>
-                                    <button type="submit" class="btn btn-info" disabled id="decryptBtn">
-                                        <i class="fas fa-unlock me-2"></i>Decrypt File
-                                        <span class="loading spinner-border spinner-border-sm ms-2"></span>
-                                    </button>
-                                </form>
-                                
-                                <div id="decryptResults" class="mt-3" style="display: none;">
-                                    <div class="alert alert-info">
-                                        <h6><i class="fas fa-check-circle me-2"></i>File Decrypted Successfully!</h6>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <strong>Encrypted File:</strong> <span id="originalEncryptedFilename"></span><br>
-                                                <strong>Decrypted File:</strong> <span id="decryptedFilename"></span>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <strong>Encrypted Size:</strong> <span id="originalEncryptedSize"></span> bytes<br>
-                                                <strong>Decrypted Size:</strong> <span id="decryptedSize"></span> bytes
-                                            </div>
-                                        </div>
-                                        <div class="mt-2">
-                                            <strong>Decryption Time:</strong> <span id="decryptionTime"></span>s
-                                        </div>
-                                        <button class="btn btn-sm btn-success mt-2" onclick="downloadFile($('#decryptedFilename').text())">
-                                            <i class="fas fa-download me-1"></i>Download Decrypted File
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+
+                            <label class="process-label">Encryption Mode</label>
+                            <select class="process-select" id="encryptMode">
+                                <option value="gcm">AES-192-GCM (Recommended)</option>
+                                <option value="cbc">AES-192-CBC</option>
+                            </select>
+
+                            <button class="process-button" onclick="encryptFile()" id="encryptBtn" disabled>
+                                Encrypt File
+                            </button>
+
+                            <div class="process-result" id="encryptResults"></div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Control Panel -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header bg-secondary text-white">
-                                <h5 class="mb-0">
-                                    <i class="fas fa-cog me-2"></i>System Control
-                                </h5>
+                    <!-- STEP 4: DECRYPT FILE -->
+                    <div class="step-content" id="step4">
+                        <div class="process-card">
+                            <h2>Decrypt File</h2>
+
+                            <label class="process-label">Choose Encrypted File</label>
+                            <div class="file-input-wrapper">
+                                <input type="file" id="decryptFile" class="process-select" onchange="updateFileInfo(this, 'decrypt')">
+                                <div class="file-info" id="decryptFileInfo"></div>
                             </div>
-                            <div class="card-body text-center">
-                                <button class="btn btn-danger" onclick="resetSystem()">
-                                    <i class="fas fa-redo me-2"></i>Reset System
-                                    <span class="loading spinner-border spinner-border-sm ms-2"></span>
-                                </button>
-                                <small class="text-muted ms-3">Clear all keys, files, and reset the system</small>
-                            </div>
+
+                            <button class="process-button" onclick="decryptFile()" id="decryptBtn" disabled>
+                                Decrypt File
+                            </button>
+
+                            <div class="process-result" id="decryptResults"></div>
                         </div>
+                    </div>
+
+                    <!-- DANGER ZONE -->
+                    <div class="process-danger">
+                        <h3>Danger Zone</h3>
+                        <p>Reset system (clear keys & files)</p>
+                        <button onclick="resetSystem()">Reset</button>
                     </div>
                 </div>
             </div>
@@ -436,349 +244,10 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-3 mt-5">
-        <div class="container">
-            <p class="mb-0">Hybrid ECC-AES192 Secure Key Exchange & File Encryption System</p>
-            <small>Web-Based Cryptography Demonstration</small>
-        </div>
-    </footer>
-
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        // Global state
-        let systemState = {
-            keysGenerated: false,
-            keyExchanged: false
-        };
-
-        // Show loading spinner
-        function showLoading(buttonId) {
-            $(`#${buttonId}`).prop('disabled', true);
-            $(`#${buttonId} .loading`).addClass('show');
-        }
-
-        // Hide loading spinner
-        function hideLoading(buttonId) {
-            $(`#${buttonId}`).prop('disabled', false);
-            $(`#${buttonId} .loading`).removeClass('show');
-        }
-
-        // Generate ECC Keys
-        async function generateKeys() {
-            showLoading('generateKeys');
-            
-            try {
-                const response = await fetch('/generate_keys');
-                const result = await response.json();
-                
-                if (result.success) {
-                    systemState.keysGenerated = true;
-                    
-                    // Display results
-                    $('#aliceGenTime').text(result.alice_generation_time.toFixed(6));
-                    $('#bobGenTime').text(result.bob_generation_time.toFixed(6));
-                    $('#totalGenTime').text(result.total_generation_time.toFixed(6));
-                    $('#alicePublicKey').text(result.alice_public_key);
-                    $('#bobPublicKey').text(result.bob_public_key);
-                    $('#keyResults').show();
-                    
-                    // Enable key exchange button
-                    $('#keyExchangeBtn').prop('disabled', false);
-                    
-                    showAlert('Keys generated successfully!', 'success');
-                } else {
-                    showAlert('Error generating keys: ' + result.error, 'error');
-                }
-            } catch (error) {
-                showAlert('Network error: ' + error.message, 'error');
-            } finally {
-                hideLoading('generateKeys');
-            }
-        }
-
-        // Perform Key Exchange
-        async function performKeyExchange() {
-            showLoading('keyExchangeBtn');
-            
-            try {
-                const response = await fetch('/key_exchange');
-                const result = await response.json();
-                
-                if (result.success) {
-                    systemState.keyExchanged = true;
-                    
-                    // Display results
-                    $('#keysMatch').text(result.keys_match ? '✓ Yes' : '✗ No');
-                    $('#secretsMatch').text(result.shared_secrets_match ? '✓ Yes' : '✗ No');
-                    $('#aesKey').text(result.alice_aes_key);
-                    $('#aliceECDHTime').text(result.alice_computation_time.toFixed(6));
-                    $('#aliceHKDFTime').text(result.alice_derivation_time.toFixed(6));
-                    $('#aliceTotalTime').text(result.total_alice_time.toFixed(6));
-                    $('#bobECDHTime').text(result.bob_computation_time.toFixed(6));
-                    $('#bobHKDFTime').text(result.bob_derivation_time.toFixed(6));
-                    $('#bobTotalTime').text(result.total_bob_time.toFixed(6));
-                    $('#exchangeResults').show();
-                    
-                    // Enable encrypt/decrypt buttons
-                    $('#encryptBtn').prop('disabled', false);
-                    $('#decryptBtn').prop('disabled', false);
-                    
-                    showAlert('Key exchange completed successfully!', 'success');
-                } else {
-                    showAlert('Error in key exchange: ' + result.error, 'error');
-                }
-            } catch (error) {
-                showAlert('Network error: ' + error.message, 'error');
-            } finally {
-                hideLoading('keyExchangeBtn');
-            }
-        }
-
-        // Handle File Encryption
-        $('#encryptForm').on('submit', async function(e) {
-            e.preventDefault();
-            
-            if (!systemState.keyExchanged) {
-                showAlert('Please perform key exchange first!', 'error');
-                return;
-            }
-            
-            showLoading('encryptBtn');
-            
-            try {
-                const formData = new FormData(this);
-                const response = await fetch('/encrypt_file', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    // Display results
-                    $('#originalFilename').text(result.original_filename);
-                    $('#encryptedFilename').text(result.encrypted_filename);
-                    $('#encryptAlgorithm').text(result.algorithm);
-                    $('#originalSize').text(result.original_size.toLocaleString());
-                    $('#encryptedSize').text(result.encrypted_size.toLocaleString());
-                    $('#sizeIncrease').text(result.size_increase_percent.toFixed(2));
-                    $('#encryptionTime').text(result.encryption_time.toFixed(6));
-                    
-                    // Show metadata for GCM mode
-                    if (result.algorithm === 'AES-192-GCM') {
-                        $('#encryptNonce').text(result.nonce);
-                        $('#encryptTag').text(result.tag);
-                        $('#encryptMetadata').show();
-                    }
-                    
-                    $('#encryptResults').show();
-                    showAlert('File encrypted successfully!', 'success');
-                } else {
-                    showAlert('Error encrypting file: ' + result.error, 'error');
-                }
-            } catch (error) {
-                showAlert('Network error: ' + error.message, 'error');
-            } finally {
-                hideLoading('encryptBtn');
-            }
-        });
-
-        // Handle File Decryption
-        $('#decryptForm').on('submit', async function(e) {
-            e.preventDefault();
-            
-            if (!systemState.keyExchanged) {
-                showAlert('Please perform key exchange first!', 'error');
-                return;
-            }
-            
-            showLoading('decryptBtn');
-            
-            try {
-                const formData = new FormData(this);
-                const response = await fetch('/decrypt_file', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    // Display results
-                    $('#originalEncryptedFilename').text(result.original_encrypted_filename);
-                    $('#decryptedFilename').text(result.decrypted_filename);
-                    $('#originalEncryptedSize').text(result.original_encrypted_size.toLocaleString());
-                    $('#decryptedSize').text(result.decrypted_size.toLocaleString());
-                    $('#decryptionTime').text(result.decryption_time.toFixed(6));
-                    $('#decryptResults').show();
-                    showAlert('File decrypted successfully!', 'success');
-                } else {
-                    showAlert('Error decrypting file: ' + result.error, 'error');
-                }
-            } catch (error) {
-                showAlert('Network error: ' + error.message, 'error');
-            } finally {
-                hideLoading('decryptBtn');
-            }
-        });
-
-        // Download File
-        function downloadFile(filename) {
-            window.open(`/download_file/${filename}`, '_blank');
-        }
-
-        // Reset System
-        async function resetSystem() {
-            if (!confirm('Are you sure you want to reset the system? All keys and files will be deleted.')) {
-                return;
-            }
-            
-            showLoading('resetSystem');
-            
-            try {
-                const response = await fetch('/reset');
-                const result = await response.json();
-                
-                if (result.success) {
-                    // Reset state
-                    systemState = {
-                        keysGenerated: false,
-                        keyExchanged: false
-                    };
-                    
-                    // Hide all results
-                    $('#keyResults, #exchangeResults, #encryptResults, #decryptResults').hide();
-                    
-                    // Reset form
-                    $('#encryptForm, #decryptForm')[0].reset();
-                    
-                    // Disable buttons
-                    $('#keyExchangeBtn, #encryptBtn, #decryptBtn').prop('disabled', true);
-                    
-                    showAlert('System reset successfully!', 'success');
-                } else {
-                    showAlert('Error resetting system: ' + result.error, 'error');
-                }
-            } catch (error) {
-                showAlert('Network error: ' + error.message, 'error');
-            } finally {
-                hideLoading('resetSystem');
-            }
-        }
-
-        // Load Performance Data
-        async function loadPerformance() {
-            try {
-                const response = await fetch('/performance');
-                const result = await response.json();
-                
-                if (result.success) {
-                    displayPerformanceStats(result.statistics);
-                    displayPerformanceLogs(result.logs);
-                } else {
-                    showAlert('Error loading performance data: ' + result.error, 'error');
-                }
-            } catch (error) {
-                showAlert('Network error: ' + error.message, 'error');
-            }
-        }
-
-        // Display Performance Statistics
-        function displayPerformanceStats(stats) {
-            const statsHtml = `
-                <div class="col-md-3">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title text-primary">${stats.total_operations}</h5>
-                            <p class="card-text">Total Operations</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title text-success">${stats.key_generation_count}</h5>
-                            <p class="card-text">Key Generations</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title text-info">${stats.encryption_count}</h5>
-                            <p class="card-text">Encryptions</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title text-warning">${stats.decryption_count}</h5>
-                            <p class="card-text">Decryptions</p>
-                        </div>
-                    </div>
-                </div>
-            `;
-            $('#statsCards').html(statsHtml);
-        }
-
-        // Display Performance Logs
-        function displayPerformanceLogs(logs) {
-            let logsHtml = '';
-            logs.forEach(log => {
-                const timestamp = new Date(log.timestamp * 1000).toLocaleString();
-                let details = '';
-                
-                if (log.operation.includes('Key Generation')) {
-                    details = `Total: ${log.total_time.toFixed(6)}s`;
-                } else if (log.operation.includes('Key Exchange')) {
-                    details = `Alice: ${log.alice_time.toFixed(6)}s, Bob: ${log.bob_time.toFixed(6)}s`;
-                } else if (log.operation.includes('Encryption')) {
-                    details = `Time: ${log.encryption_time.toFixed(6)}s, Size: ${log.original_size} bytes`;
-                } else if (log.operation.includes('Decryption')) {
-                    details = `Time: ${log.decryption_time.toFixed(6)}s, Size: ${log.decrypted_size} bytes`;
-                }
-                
-                logsHtml += `
-                    <tr>
-                        <td>${log.operation}</td>
-                        <td>${details.includes('Time:') ? details.match(/Time: [\d.]+s/)[0] : details}</td>
-                        <td>${details}</td>
-                        <td>${timestamp}</td>
-                    </tr>
-                `;
-            });
-            
-            $('#logsTable tbody').html(logsHtml || '<tr><td colspan="4" class="text-center">No logs available</td></tr>');
-        }
-
-        // Show Alert
-        function showAlert(message, type) {
-            const alertClass = type === 'error' ? 'alert-danger' : 'alert-success';
-            const alertHtml = `
-                <div class="alert ${alertClass} alert-dismissible fade show position-fixed" style="top: 20px; right: 20px; z-index: 1050;">
-                    ${message}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            `;
-            $('body').append(alertHtml);
-            
-            // Auto dismiss after 5 seconds
-            setTimeout(() => {
-                $('.alert').alert('close');
-            }, 5000);
-        }
-
-        // Initialize on page load
-        $(document).ready(function() {
-            // Load performance data when analysis tab is shown
-            $('button[data-bs-target="#analysis"]').on('shown.bs.tab', function() {
-                loadPerformance();
-            });
-        });
-    </script>
+    <script src="{{ url_for('static', filename='js/process.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>

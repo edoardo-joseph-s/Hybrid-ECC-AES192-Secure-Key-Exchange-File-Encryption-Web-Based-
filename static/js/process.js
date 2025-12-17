@@ -1,0 +1,309 @@
+// Process tab specific JavaScript
+let currentStep = 1;
+let processState = {
+    keysGenerated: false,
+    keyExchanged: false
+};
+
+function updateStepper() {
+    document.querySelectorAll('.process-step').forEach((step, index) => {
+        if (index + 1 <= currentStep) {
+            step.classList.add('active');
+        } else {
+            step.classList.remove('active');
+        }
+    });
+}
+
+function showStep(stepNumber) {
+    document.querySelectorAll('.step-content').forEach(content => {
+        content.classList.remove('active');
+    });
+    document.getElementById(`step${stepNumber}`).classList.add('active');
+    currentStep = stepNumber;
+    updateStepper();
+}
+
+function updateFileInfo(input, type) {
+    const file = input.files[0];
+    const infoElement = document.getElementById(`${type}FileInfo`);
+    if (file) {
+        infoElement.textContent = `Selected: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
+    } else {
+        infoElement.textContent = '';
+    }
+}
+
+// Override existing functions to work with new UI
+async function generateKeys() {
+    const btn = document.getElementById('generateKeysBtn');
+    btn.disabled = true;
+    btn.textContent = 'Generating...';
+    
+    try {
+        const response = await fetch('/generate_keys');
+        const result = await response.json();
+        
+        if (result.success) {
+            processState.keysGenerated = true;
+            
+            const resultsDiv = document.getElementById('keyResults');
+            resultsDiv.innerHTML = `
+                <div class="process-success">✓ Alice Public Key generated</div>
+                <div class="process-success">✓ Bob Public Key generated</div>
+                <div style="margin-top: 12px; font-size: 12px; color: var(--muted);">
+                    Generation time: ${result.total_generation_time.toFixed(4)}s
+                </div>
+            `;
+            
+            // Update key display in step 2
+            document.getElementById('alicePubKey').textContent = result.alice_public_key.substring(0, 40) + '...';
+            document.getElementById('bobPubKey').textContent = result.bob_public_key.substring(0, 40) + '...';
+            
+            // Enable key exchange button
+            document.getElementById('keyExchangeBtn').disabled = false;
+            
+            // Auto-advance to step 2 after a short delay
+            setTimeout(() => {
+                showStep(2);
+            }, 1500);
+        } else {
+            document.getElementById('keyResults').innerHTML = `
+                <div style="color: var(--danger);">Error: ${result.error}</div>
+            `;
+        }
+    } catch (error) {
+        document.getElementById('keyResults').innerHTML = `
+            <div style="color: var(--danger);">Network error: ${error.message}</div>
+        `;
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Generate Keypair';
+    }
+}
+
+async function performKeyExchange() {
+    const btn = document.getElementById('keyExchangeBtn');
+    btn.disabled = true;
+    btn.textContent = 'Exchanging...';
+    
+    try {
+        const response = await fetch('/key_exchange');
+        const result = await response.json();
+        
+        if (result.success) {
+            processState.keyExchanged = true;
+            
+            const resultsDiv = document.getElementById('exchangeResults');
+            resultsDiv.innerHTML = `
+                <div class="process-success">✓ Key exchange completed successfully</div>
+                <div class="process-success">✓ AES-192 key derived</div>
+                <div style="margin-top: 12px; font-size: 12px; color: var(--muted);">
+                    Keys match: ${result.keys_match ? 'Yes' : 'No'}<br>
+                    Shared secrets match: ${result.shared_secrets_match ? 'Yes' : 'No'}<br>
+                    Total time: ${(result.total_alice_time + result.total_bob_time).toFixed(4)}s
+                </div>
+            `;
+            
+            // Enable encrypt/decrypt buttons
+            document.getElementById('encryptBtn').disabled = false;
+            document.getElementById('decryptBtn').disabled = false;
+            
+            // Auto-advance to step 3 after a short delay
+            setTimeout(() => {
+                showStep(3);
+            }, 1500);
+        } else {
+            document.getElementById('exchangeResults').innerHTML = `
+                <div style="color: var(--danger);">Error: ${result.error}</div>
+            `;
+        }
+    } catch (error) {
+        document.getElementById('exchangeResults').innerHTML = `
+            <div style="color: var(--danger);">Network error: ${error.message}</div>
+        `;
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Perform Key Exchange';
+    }
+}
+
+async function encryptFile() {
+    const fileInput = document.getElementById('encryptFile');
+    const file = fileInput.files[0];
+    
+    if (!file) {
+        alert('Please select a file to encrypt');
+        return;
+    }
+    
+    const btn = document.getElementById('encryptBtn');
+    btn.disabled = true;
+    btn.textContent = 'Encrypting...';
+    
+    try {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('mode', document.getElementById('encryptMode').value);
+        
+        const response = await fetch('/encrypt_file', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            const resultsDiv = document.getElementById('encryptResults');
+            resultsDiv.innerHTML = `
+                <div class="process-success">✓ File encrypted successfully</div>
+                <div style="margin-top: 12px; font-size: 12px; color: var(--muted);">
+                    Original: ${result.original_filename}<br>
+                    Encrypted: ${result.encrypted_filename}<br>
+                    Algorithm: ${result.algorithm}<br>
+                    Size increase: ${result.size_increase_percent.toFixed(2)}%<br>
+                    Time: ${result.encryption_time.toFixed(4)}s
+                </div>
+                <button class="process-button" style="margin-top: 12px; padding: 6px 12px; font-size: 12px;" 
+                        onclick="window.open('/download_file/${result.encrypted_filename}', '_blank')">
+                    Download Encrypted File
+                </button>
+            `;
+            
+            // Auto-advance to step 4 after a short delay
+            setTimeout(() => {
+                showStep(4);
+            }, 1500);
+        } else {
+            document.getElementById('encryptResults').innerHTML = `
+                <div style="color: var(--danger);">Error: ${result.error}</div>
+            `;
+        }
+    } catch (error) {
+        document.getElementById('encryptResults').innerHTML = `
+            <div style="color: var(--danger);">Network error: ${error.message}</div>
+        `;
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Encrypt File';
+    }
+}
+
+async function decryptFile() {
+    const fileInput = document.getElementById('decryptFile');
+    const file = fileInput.files[0];
+    
+    if (!file) {
+        alert('Please select a file to decrypt');
+        return;
+    }
+    
+    const btn = document.getElementById('decryptBtn');
+    btn.disabled = true;
+    btn.textContent = 'Decrypting...';
+    
+    try {
+        const formData = new FormData();
+        formData.append('file', file);
+        
+        const response = await fetch('/decrypt_file', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            const resultsDiv = document.getElementById('decryptResults');
+            resultsDiv.innerHTML = `
+                <div class="process-success">✓ File decrypted successfully</div>
+                <div style="margin-top: 12px; font-size: 12px; color: var(--muted);">
+                    Encrypted: ${result.original_encrypted_filename}<br>
+                    Decrypted: ${result.decrypted_filename}<br>
+                    Time: ${result.decryption_time.toFixed(4)}s
+                </div>
+                <button class="process-button" style="margin-top: 12px; padding: 6px 12px; font-size: 12px;" 
+                        onclick="window.open('/download_file/${result.decrypted_filename}', '_blank')">
+                    Download Decrypted File
+                </button>
+            `;
+        } else {
+            document.getElementById('decryptResults').innerHTML = `
+                <div style="color: var(--danger);">Error: ${result.error}</div>
+            `;
+        }
+    } catch (error) {
+        document.getElementById('decryptResults').innerHTML = `
+            <div style="color: var(--danger);">Network error: ${error.message}</div>
+        `;
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Decrypt File';
+    }
+}
+
+// Override reset system function
+async function resetSystem() {
+    if (!confirm('Are you sure you want to reset the system? All keys and files will be deleted.')) {
+        return;
+    }
+    
+    try {
+        const response = await fetch('/reset');
+        const result = await response.json();
+        
+        if (result.success) {
+            processState = {
+                keysGenerated: false,
+                keyExchanged: false
+            };
+            
+            // Clear all results
+            document.getElementById('keyResults').innerHTML = '';
+            document.getElementById('exchangeResults').innerHTML = '';
+            document.getElementById('encryptResults').innerHTML = '';
+            document.getElementById('decryptResults').innerHTML = '';
+            
+            // Reset key display
+            document.getElementById('alicePubKey').textContent = 'Not generated';
+            document.getElementById('bobPubKey').textContent = 'Not generated';
+            
+            // Disable buttons
+            document.getElementById('keyExchangeBtn').disabled = true;
+            document.getElementById('encryptBtn').disabled = true;
+            document.getElementById('decryptBtn').disabled = true;
+            
+            // Clear file inputs
+            document.getElementById('encryptFile').value = '';
+            document.getElementById('decryptFile').value = '';
+            document.getElementById('encryptFileInfo').textContent = '';
+            document.getElementById('decryptFileInfo').textContent = '';
+            
+            // Reset to step 1
+            showStep(1);
+            
+            alert('System reset successfully!');
+        } else {
+            alert('Error resetting system: ' + result.error);
+        }
+    } catch (error) {
+        alert('Network error: ' + error.message);
+    }
+}
+
+// Add click handlers for stepper navigation
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.process-step').forEach(step => {
+        step.addEventListener('click', function() {
+            const stepNumber = parseInt(this.dataset.step);
+            
+            // Only allow navigation to completed steps or current step
+            if (stepNumber <= currentStep || 
+                (stepNumber === 2 && processState.keysGenerated) ||
+                (stepNumber === 3 && processState.keyExchanged) ||
+                (stepNumber === 4 && processState.keyExchanged)) {
+                showStep(stepNumber);
+            }
+        });
+    });
+});

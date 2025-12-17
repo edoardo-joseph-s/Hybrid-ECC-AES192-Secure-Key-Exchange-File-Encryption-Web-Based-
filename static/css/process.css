@@ -1,0 +1,179 @@
+:root {
+    --bg: #f9fafb;
+    --card: #ffffff;
+    --border: #e5e7eb;
+    --text: #111827;
+    --muted: #6b7280;
+    --primary: #111827;
+    --danger: #dc2626;
+    --success: #16a34a;
+}
+
+/* Custom styles for new process tab design */
+.process-container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 48px 16px;
+}
+
+.process-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.process-header h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--text);
+}
+
+.process-header p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.process-stepper {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.process-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.process-step span {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+}
+
+.process-step.active {
+    color: var(--text);
+    font-weight: 500;
+}
+
+.process-step.active span {
+    border-color: var(--text);
+}
+
+.process-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 32px;
+}
+
+.process-card h2 {
+    margin: 0 0 20px 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.process-label {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 6px;
+}
+
+.process-select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.process-button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.process-button:hover {
+    opacity: 0.9;
+}
+
+.process-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.process-result {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.process-success {
+    color: var(--success);
+    margin-top: 6px;
+}
+
+.process-danger {
+    border: 1px solid #fecaca;
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.process-danger h3 {
+    margin: 0 0 8px 0;
+    color: var(--danger);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.process-danger p {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 16px;
+}
+
+.process-danger button {
+    background: transparent;
+    border: 1px solid #fca5a5;
+    color: var(--danger);
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.process-danger button:hover {
+    background: #fef2f2;
+}
+
+.step-content {
+    display: none;
+}
+
+.step-content.active {
+    display: block;
+}
+
+.file-input-wrapper {
+    margin-bottom: 20px;
+}
+
+.file-info {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 8px;
+}
