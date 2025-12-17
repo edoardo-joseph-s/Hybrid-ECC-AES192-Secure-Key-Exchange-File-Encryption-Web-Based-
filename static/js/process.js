@@ -58,11 +58,9 @@ async function generateKeys() {
                 </div>
             `;
 
-      // Update key display in step 2
-      document.getElementById('alicePubKey').textContent =
-        result.alice_public_key.substring(0, 40) + '...';
-      document.getElementById('bobPubKey').textContent =
-        result.bob_public_key.substring(0, 40) + '...';
+      // Update key display in step 2 (show full PEM in textarea)
+      document.getElementById('alicePubKey').value = result.alice_public_key;
+      document.getElementById('bobPubKey').value = result.bob_public_key;
 
       // Enable key exchange button
       document.getElementById('keyExchangeBtn').disabled = false;
@@ -89,7 +87,7 @@ async function generateKeys() {
 async function performKeyExchange() {
   const btn = document.getElementById('keyExchangeBtn');
   btn.disabled = true;
-  btn.textContent = 'Exchanging...';
+  btn.textContent = 'Bertukar...';
 
   try {
     const response = await fetch('/key_exchange');
@@ -100,14 +98,14 @@ async function performKeyExchange() {
 
       const resultsDiv = document.getElementById('exchangeResults');
       resultsDiv.innerHTML = `
-                <div class="process-success">✓ Key exchange completed successfully</div>
-                <div class="process-success">✓ AES-192 key derived</div>
+                <div class="process-success">✓ Pertukaran kunci berhasil</div>
+                <div class="process-success">✓ Kunci AES-192 berhasil diturunkan</div>
                 <div style="margin-top: 12px; font-size: 12px; color: var(--muted);">
-                    Keys match: ${result.keys_match ? 'Yes' : 'No'}<br>
-                    Shared secrets match: ${
-                      result.shared_secrets_match ? 'Yes' : 'No'
+                    Kunci cocok: ${result.keys_match ? 'Ya' : 'Tidak'}<br>
+                    Shared secrets cocok: ${
+                      result.shared_secrets_match ? 'Ya' : 'Tidak'
                     }<br>
-                    Total time: ${(
+                    Waktu total: ${(
                       result.total_alice_time + result.total_bob_time
                     ).toFixed(4)}s
                 </div>
@@ -132,8 +130,23 @@ async function performKeyExchange() {
         `;
   } finally {
     btn.disabled = false;
-    btn.textContent = 'Perform Key Exchange';
+    btn.textContent = 'Lakukan Pertukaran Kunci';
   }
+}
+
+// Copy public key to clipboard
+function copyToClipboard(elementId) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  const value = el.value || el.textContent || '';
+  navigator.clipboard
+    .writeText(value)
+    .then(() => {
+      alert('Kunci disalin ke clipboard');
+    })
+    .catch(() => {
+      alert('Gagal menyalin kunci');
+    });
 }
 
 async function encryptFile() {
@@ -282,9 +295,9 @@ async function resetSystem() {
       document.getElementById('encryptResults').innerHTML = '';
       document.getElementById('decryptResults').innerHTML = '';
 
-      // Reset key display
-      document.getElementById('alicePubKey').textContent = 'Belum dibuat';
-      document.getElementById('bobPubKey').textContent = 'Belum dibuat';
+      // Reset key display (textarea)
+      document.getElementById('alicePubKey').value = 'Belum dibuat';
+      document.getElementById('bobPubKey').value = 'Belum dibuat';
 
       // Disable buttons
       document.getElementById('keyExchangeBtn').disabled = true;

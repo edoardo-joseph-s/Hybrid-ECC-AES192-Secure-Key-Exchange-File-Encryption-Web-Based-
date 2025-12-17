@@ -67,13 +67,30 @@
                             <h2>Key Exchange ECDH</h2>
 
                             <label class="process-label">Public Key</label>
-                            <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 12px; margin-bottom: 20px; font-family: monospace; font-size: 12px;">
-                                <div><strong>Alice:</strong> <span id="alicePubKey">Belum dibuat</span></div>
-                                <div><strong>Bob:</strong> <span id="bobPubKey">Belum dibuat</span></div>
+                            <div class="public-keys" style="margin-bottom: 16px;">
+                                <div class="public-key-block">
+                                    <div class="d-flex justify-content-between align-items-start mb-1">
+                                        <strong>Alice:</strong>
+                                        <div>
+                                            <button class="btn btn-sm btn-outline-secondary" onclick="copyToClipboard('alicePubKey')">Salin</button>
+                                        </div>
+                                    </div>
+                                    <textarea id="alicePubKey" class="form-control public-key-area" rows="6" readonly>Belum dibuat</textarea>
+                                </div>
+
+                                <div class="public-key-block mt-3">
+                                    <div class="d-flex justify-content-between align-items-start mb-1">
+                                        <strong>Bob:</strong>
+                                        <div>
+                                            <button class="btn btn-sm btn-outline-secondary" onclick="copyToClipboard('bobPubKey')">Salin</button>
+                                        </div>
+                                    </div>
+                                    <textarea id="bobPubKey" class="form-control public-key-area" rows="6" readonly>Belum dibuat</textarea>
+                                </div>
                             </div>
 
                             <button class="process-button" onclick="performKeyExchange()" id="keyExchangeBtn" disabled>
-                                Perform Key Exchange
+                                Lakukan Pertukaran Kunci
                             </button>
 
                             <div class="process-result" id="exchangeResults"></div>
