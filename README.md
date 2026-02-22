@@ -1,6 +1,7 @@
 # Hybrid ECC-AES192 Secure Key Exchange & File Encryption (Web-Based)
 
 Aplikasi web berbasis Flask untuk demonstrasi kriptografi hibrid:
+
 - Pertukaran kunci menggunakan `ECC + ECDH`
 - Derivasi kunci simetris menggunakan `HKDF-SHA256`
 - Enkripsi/dekripsi file menggunakan `AES-192` (mode `GCM` atau `CBC`)
@@ -50,6 +51,7 @@ Project ini ditujukan untuk kebutuhan edukasi/akademik, bukan langsung untuk pro
 ```
 
 Saat aplikasi berjalan, folder berikut akan otomatis dibuat jika belum ada:
+
 - `uploads/`
 - `keys/`
 - `encrypted/`
@@ -128,6 +130,7 @@ http://localhost:5002
 ## Format File Enkripsi
 
 Output enkripsi disimpan sebagai JSON, berisi metadata seperti:
+
 - `algorithm`
 - `original_filename`
 - `ciphertext` (Base64)
@@ -143,7 +146,3 @@ Ekstensi output default: `.enc`
 - Kunci privat disimpan ke file PEM tanpa passphrase.
 
 Untuk penggunaan produksi, perlu hardening tambahan (secret management, session store, authN/authZ, secure key storage, TLS, logging sanitization, dsb).
-
-## Lisensi
-
-Belum ditentukan. Tambahkan file `LICENSE` sesuai kebutuhan Anda.
