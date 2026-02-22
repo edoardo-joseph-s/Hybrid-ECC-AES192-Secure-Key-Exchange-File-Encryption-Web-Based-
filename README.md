@@ -144,5 +144,3 @@ Ekstensi output default: `.enc`
 - `secret_key` Flask diset statis di source code.
 - Manajemen sesi masih in-memory global (`session_data`) dan belum cocok untuk multi-user production.
 - Kunci privat disimpan ke file PEM tanpa passphrase.
-
-Untuk penggunaan produksi, perlu hardening tambahan (secret management, session store, authN/authZ, secure key storage, TLS, logging sanitization, dsb).
